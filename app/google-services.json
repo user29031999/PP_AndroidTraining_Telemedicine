@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "123783975698",
+    "project_id": "pp-training-telemedicine",
+    "storage_bucket": "pp-training-telemedicine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123783975698:android:e32c70c5e1497f4ebe99cb",
+        "android_client_info": {
+          "package_name": "com.example.telemedicine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123783975698-tfnbaes6k5ik6m555cfe2g2mo5hbonn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIRWj5CQPYJYLwuj3WUS2r9jEDDR1MB9g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123783975698-tfnbaes6k5ik6m555cfe2g2mo5hbonn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
