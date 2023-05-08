@@ -76,7 +76,7 @@ class RegistrationRepo {
     }
 
     private fun move_to_next_screen(context: Context) {
-        (context as RegistrationActivity).jump_nxt_screen()
+        (context as RegistrationActivity).jumpNxtScreen()
     }
 
 

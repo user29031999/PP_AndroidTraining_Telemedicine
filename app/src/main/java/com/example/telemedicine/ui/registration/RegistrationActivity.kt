@@ -21,126 +21,94 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class RegistrationActivity : AppCompatActivity() {
-
     private lateinit var registrationBinding: ActivityRegistrationBinding
     private lateinit var registrationViewModel: RegistrationViewModel
     val idling: CountingIdlingResource = CountingIdlingResource("RegistrationResource")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         registrationBinding = DataBindingUtil.setContentView(
             this@RegistrationActivity,
             R.layout.activity_registration
         )
-
         registrationViewModel =
             ViewModelProvider(this@RegistrationActivity).get(RegistrationViewModel::class.java)
-
         registrationBinding.registrationLayout.btnRegister.setOnClickListener {
-            check_for_empty_fields()
+            checkForEmptyFields()
         }
-
         registrationBinding.registrationLayout.tvLogin.setOnClickListener {
-            var intent = Intent(this@RegistrationActivity, LoginActivity::class.java)
+            val intent = Intent(this@RegistrationActivity, LoginActivity::class.java)
             startActivity(intent)
         }
-
         registrationBinding.registrationLayout.passwordVisible.setOnClickListener {
             if (registrationBinding.registrationLayout.etPassword.transformationMethod != null) {
                 registrationBinding.registrationLayout.passwordVisible.setImageResource(R.drawable.ic_baseline_visibility_24)
-                registrationBinding.registrationLayout.etPassword.setTransformationMethod(null)
+                registrationBinding.registrationLayout.etPassword.transformationMethod = null
             } else {
                 registrationBinding.registrationLayout.passwordVisible.setImageResource(R.drawable.ic_baseline_visibility_off_24)
-                registrationBinding.registrationLayout.etPassword.setTransformationMethod(
+                registrationBinding.registrationLayout.etPassword.transformationMethod =
                     PasswordTransformationMethod()
-                )
             }
         }
-
-
         registrationBinding.registrationLayout.confirmPasswordVisible.setOnClickListener {
             if (registrationBinding.registrationLayout.etConfirmPassword.transformationMethod != null) {
                 registrationBinding.registrationLayout.confirmPasswordVisible.setImageResource(R.drawable.ic_baseline_visibility_24)
-                registrationBinding.registrationLayout.etConfirmPassword.setTransformationMethod(
-                    null
-                )
+                registrationBinding.registrationLayout.etConfirmPassword.transformationMethod = null
             } else {
                 registrationBinding.registrationLayout.confirmPasswordVisible.setImageResource(R.drawable.ic_baseline_visibility_off_24)
-                registrationBinding.registrationLayout.etConfirmPassword.setTransformationMethod(
+                registrationBinding.registrationLayout.etConfirmPassword.transformationMethod =
                     PasswordTransformationMethod()
-                )
             }
         }
-
     }
 
-    private fun check_for_empty_fields() {
+    private fun checkForEmptyFields() {
         if (registrationBinding.registrationLayout.etEmail.text.isNotEmpty()
             && registrationBinding.registrationLayout.etPassword.text.isNotEmpty()
             && registrationBinding.registrationLayout.etConfirmPassword.text.isNotEmpty()
         ) {
-
-            var password: String = registrationBinding.registrationLayout.etPassword.text.toString()
-            var confirm_password: String =
+            val password: String = registrationBinding.registrationLayout.etPassword.text.toString()
+            val confirmPassword: String =
                 registrationBinding.registrationLayout.etConfirmPassword.text.toString()
-
-            if (password.length >= 6) {
-                if (password.equals(confirm_password)) {
-
-                    //// do the user registration
-
-
-                    var user = User(
-                        registrationBinding.registrationLayout.etEmail.text.toString(),
-                        AppConstants.user_type
-                    )
-
-
-                    registrationBinding.progressBar2.visibility = View.VISIBLE
-                    registrationViewModel.registerUser(
-                        this@RegistrationActivity,
-                        user,
-                        password,
-                        registrationBinding,
-                        idling
-                    )
-                } else {
-
-                    /// display error msg
-
-                    create_snackbar("Passwords do not match !!!")
-                }
-            } else {
-                create_snackbar("Password length is too small has to be greater than 6 letters")
+            if (password.length < 6) {
+                createSnackbar("Password length is too small has to be greater than 6 letters")
             }
-
+            if (password != confirmPassword) {
+                createSnackbar("Passwords do not match !!!")
+            }
+            val user = User(
+                registrationBinding.registrationLayout.etEmail.text.toString(),
+                AppConstants.user_type
+            )
+            registrationBinding.progressBar2.visibility = View.VISIBLE
+            registrationViewModel.registerUser(
+                this@RegistrationActivity,
+                user,
+                password,
+                registrationBinding,
+                idling
+            )
         } else {
-
-            /// display error msg
-
-            create_snackbar("Empty Fields !!!!!")
-
+            createSnackbar("Empty Fields !!!!!")
         }
     }
 
-    fun display_msg(s: String) {
+    fun displayMsg(s: String) {
         Toast.makeText(this@RegistrationActivity, s, Toast.LENGTH_LONG).show()
     }
 
-    fun jump_nxt_screen() {
+    fun jumpNxtScreen() {
         registrationBinding.progressBar2.visibility = View.GONE
-        save_to_shared_prefs()
-        var intent = Intent(this@RegistrationActivity, UserChoice::class.java)
+        saveToSharedPrefs()
+        val intent = Intent(this@RegistrationActivity, UserChoice::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun save_to_shared_prefs() {
+    private fun saveToSharedPrefs() {
         val sharedPreference =
             getSharedPreferences(AppConstants.sharedPrefName, Context.MODE_PRIVATE)
-        var editor = sharedPreference.edit()
+        val editor = sharedPreference.edit()
         editor.putString(
             AppConstants.userid,
             FirebaseAuth.getInstance().currentUser!!.uid.toString()
@@ -148,7 +116,7 @@ class RegistrationActivity : AppCompatActivity() {
         editor.commit()
     }
 
-    private fun create_snackbar(text: String) {
+    private fun createSnackbar(text: String) {
         val snackbar = Snackbar.make(
             registrationBinding.root, text,
             Snackbar.LENGTH_LONG
