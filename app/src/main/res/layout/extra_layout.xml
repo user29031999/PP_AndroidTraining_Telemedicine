@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_screen_background"
-    tools:context=".ui.registration.RegsitrationActivity">
+    tools:context=".ui.registration.RegistrationActivity">
 
     <TextView
         android:id="@+id/textView"

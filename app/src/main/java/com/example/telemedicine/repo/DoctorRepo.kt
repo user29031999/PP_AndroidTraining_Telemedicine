@@ -6,7 +6,6 @@ import android.widget.Toast
 import com.example.telemedicine.AppConstants
 import com.example.telemedicine.model.Doctor
 import com.example.telemedicine.ui.onboarding.ExtraInfo
-import com.example.telemedicine.ui.registration.RegsitrationActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 

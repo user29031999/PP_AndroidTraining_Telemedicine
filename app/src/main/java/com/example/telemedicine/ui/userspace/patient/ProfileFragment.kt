@@ -6,7 +6,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -14,16 +13,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.telemedicine.AppConstants
 import com.example.telemedicine.R
 import com.example.telemedicine.databinding.FragmentProfileBinding
-import com.example.telemedicine.ui.registration.RegsitrationActivity
+import com.example.telemedicine.ui.registration.RegistrationActivity
 import com.example.telemedicine.viewmodel.PatientProfileViewModel
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -118,7 +115,7 @@ class ProfileFragment : Fragment() {
             override fun onFinish() {
                 sharedPreference.edit().clear().apply()
                 Toast.makeText(requireContext(),"Logged Out Sucessfully",Toast.LENGTH_LONG).show()
-                val i = Intent(activity, RegsitrationActivity::class.java)
+                val i = Intent(activity, RegistrationActivity::class.java)
                 startActivity(i)
                 (activity as Activity?)!!.overridePendingTransition(0, 0)
             }

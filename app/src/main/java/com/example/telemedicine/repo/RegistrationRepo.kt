@@ -4,10 +4,11 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.example.telemedicine.AppConstants
 import com.example.telemedicine.databinding.ActivityRegistrationBinding
 import com.example.telemedicine.model.User
-import com.example.telemedicine.ui.registration.RegsitrationActivity
+import com.example.telemedicine.ui.registration.RegistrationActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -20,8 +21,10 @@ class RegistrationRepo {
         context: Context,
         user: User,
         password: String,
-        registrationBinding: ActivityRegistrationBinding
+        registrationBinding: ActivityRegistrationBinding,
+        idling: CountingIdlingResource
     ) {
+        idling.increment()
         firebaseAuth.createUserWithEmailAndPassword(user.email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 Log.d("registration of user", "sucessful")
@@ -45,11 +48,13 @@ class RegistrationRepo {
                             ).show()
                             Log.d("saving to database", "unsuccessful")
                         }
+                        idling.decrement()
                     }.addOnCanceledListener {
                         registrationBinding.progressBar2.visibility = View.GONE
                         Toast.makeText(context, "Failed to register user retry", Toast.LENGTH_LONG)
                             .show()
                         Log.d("saving to database", "unsuccessful")
+                        idling.decrement()
                     }
             } else {
                 registrationBinding.progressBar2.visibility = View.GONE
@@ -59,17 +64,19 @@ class RegistrationRepo {
                     Toast.LENGTH_LONG
                 ).show()
                 Log.d("registration of user", "unsucessful")
+                idling.decrement()
             }
 
         }.addOnCanceledListener {
             registrationBinding.progressBar2.visibility = View.GONE
             Toast.makeText(context, "Failed to register user retry", Toast.LENGTH_LONG).show()
             Log.d("registration of user", "cancelled")
+            idling.decrement()
         }
     }
 
     private fun move_to_next_screen(context: Context) {
-        (context as RegsitrationActivity).jump_nxt_screen()
+        (context as RegistrationActivity).jump_nxt_screen()
     }
 
 

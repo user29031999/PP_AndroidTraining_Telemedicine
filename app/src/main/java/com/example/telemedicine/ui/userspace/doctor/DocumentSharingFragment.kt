@@ -1,6 +1,5 @@
 package com.example.telemedicine.ui.userspace.doctor
 
-import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -18,8 +17,6 @@ import com.example.telemedicine.AppConstants
 import com.example.telemedicine.R
 import com.example.telemedicine.databinding.FragmentDocumentSharingBinding
 import com.example.telemedicine.model.Prescription
-import com.example.telemedicine.ui.registration.RegsitrationActivity
-import com.example.telemedicine.ui.userspace.patient.HomeFragment
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso

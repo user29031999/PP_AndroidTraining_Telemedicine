@@ -16,12 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.telemedicine.AppConstants
 import com.example.telemedicine.R
 import com.example.telemedicine.databinding.FragmentDoctorProfileBinding
-import com.example.telemedicine.ui.registration.RegsitrationActivity
+import com.example.telemedicine.ui.registration.RegistrationActivity
 import com.example.telemedicine.viewmodel.DoctorProfileViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -129,7 +125,7 @@ class DoctorProfileFragment : Fragment() {
             override fun onFinish() {
                 sharedPreference.edit().clear().apply()
                 Toast.makeText(requireContext(),"Logged out successfully",Toast.LENGTH_LONG).show()
-                val i = Intent(activity, RegsitrationActivity::class.java)
+                val i = Intent(activity, RegistrationActivity::class.java)
                 startActivity(i)
                 (activity as Activity?)!!.overridePendingTransition(0, 0)
             }

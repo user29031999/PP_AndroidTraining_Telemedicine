@@ -2,6 +2,7 @@ package com.example.telemedicine.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.example.telemedicine.databinding.ActivityRegistrationBinding
 import com.example.telemedicine.model.User
 import com.example.telemedicine.repo.RegistrationRepo
@@ -9,7 +10,7 @@ import com.example.telemedicine.repo.RegistrationRepo
 class RegistrationViewModel : ViewModel() {
 
 
-    private var registrationRepo : RegistrationRepo
+    private var registrationRepo: RegistrationRepo
 
 
     init {
@@ -23,9 +24,10 @@ class RegistrationViewModel : ViewModel() {
         context: Context,
         user: User,
         password: String,
-        registrationBinding: ActivityRegistrationBinding
+        registrationBinding: ActivityRegistrationBinding,
+        idling: CountingIdlingResource
     ) {
-       registrationRepo .register_user(context,user,password,registrationBinding)
+        registrationRepo.register_user(context, user, password, registrationBinding, idling)
     }
 
 }

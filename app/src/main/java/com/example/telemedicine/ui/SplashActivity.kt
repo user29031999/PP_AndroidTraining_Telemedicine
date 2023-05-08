@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.telemedicine.AppConstants
 import com.example.telemedicine.R
 import com.example.telemedicine.databinding.ActivitySplashBinding
-import com.example.telemedicine.ui.onboarding.DoctorInfo
 import com.example.telemedicine.ui.onboarding.UserChoice
-import com.example.telemedicine.ui.registration.RegsitrationActivity
+import com.example.telemedicine.ui.registration.RegistrationActivity
 import com.example.telemedicine.ui.userspace.doctor.DoctorSpace
 import com.example.telemedicine.ui.userspace.patient.PatientSpace
 
@@ -52,7 +51,7 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }else {
-                startActivity(Intent(this,RegsitrationActivity::class.java))
+                startActivity(Intent(this,RegistrationActivity::class.java))
                 finish()
             }
 
