@@ -8,19 +8,8 @@ import com.example.telemedicine.model.User
 import com.example.telemedicine.repo.RegistrationRepo
 
 class RegistrationViewModel : ViewModel() {
-
-
-    private var registrationRepo: RegistrationRepo
-
-
-    init {
-
-        registrationRepo = RegistrationRepo()
-
-    }
-
-
-    fun register_user(
+    private var registrationRepo: RegistrationRepo = RegistrationRepo()
+    fun registerUser(
         context: Context,
         user: User,
         password: String,
@@ -29,5 +18,4 @@ class RegistrationViewModel : ViewModel() {
     ) {
         registrationRepo.register_user(context, user, password, registrationBinding, idling)
     }
-
 }

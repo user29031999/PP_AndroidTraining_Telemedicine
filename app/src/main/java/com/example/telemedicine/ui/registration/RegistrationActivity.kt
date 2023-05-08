@@ -99,7 +99,7 @@ class RegistrationActivity : AppCompatActivity() {
 
 
                     registrationBinding.progressBar2.visibility = View.VISIBLE
-                    registrationViewModel.register_user(
+                    registrationViewModel.registerUser(
                         this@RegistrationActivity,
                         user,
                         password,

@@ -1,5 +1,6 @@
 package com.example.telemedicine.ui.registration
 
+import android.util.Log
 import android.view.View
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
@@ -11,8 +12,12 @@ import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.telemedicine.AppConstants
 import com.example.telemedicine.R
 import com.example.telemedicine.ui.utils.AlertValidations
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
@@ -40,6 +45,19 @@ class RegistrationActivityTest {
         activityRule.scenario.onActivity {
             IdlingRegistry.getInstance().unregister(it.idling)
         }
+        val firebaseUser = FirebaseAuth.getInstance().currentUser ?: return
+        FirebaseDatabase.getInstance().getReference(AppConstants.usr_coll_name)
+            .child(FirebaseAuth.getInstance().currentUser!!.uid).removeValue()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d("RegistrationTest", "Generated test user info is deleted")
+                    firebaseUser.delete().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d("RegistrationTest", "Generated test user auth is deleted")
+                        }
+                    }
+                }
+            }
     }
 
     @Test
@@ -84,6 +102,28 @@ class RegistrationActivityTest {
             "pass123",
             "pass123",
             "The email address is badly formatted.",
+            true
+        )
+    }
+
+    @Test
+    fun existingUser() {
+        fillRegistrationForm(
+            "apolinar.ortiz1999@gmail.com",
+            "pass123",
+            "pass123",
+            "The email address is already in use by another account.",
+            true
+        )
+    }
+
+    @Test
+    fun validateNewUserRegister() {
+        fillRegistrationForm(
+            "user${System.currentTimeMillis()}@test.com",
+            "pass123",
+            "pass123",
+            "User registered Sucessfully",
             true
         )
     }
