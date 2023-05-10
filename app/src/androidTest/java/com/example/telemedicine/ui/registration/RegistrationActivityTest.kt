@@ -119,6 +119,7 @@ class RegistrationActivityTest {
 
     @Test
     fun validateNewUserRegister() {
+        // Using currentTimeMillis to generate an unique user for each test.
         fillRegistrationForm(
             "user${System.currentTimeMillis()}@test.com",
             "pass123",

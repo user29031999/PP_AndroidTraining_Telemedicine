@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.example.telemedicine.AppConstants
 import com.example.telemedicine.R
 import com.example.telemedicine.databinding.ActivityPatientInfoBinding
@@ -38,6 +39,7 @@ class PatientInfo : AppCompatActivity() {
         listOf("Select Your Blood type", "O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-")
     private var gender = listOf("Select Your Gender", "Male", "Female")
     private var permissionId: Int = 101
+    val idling: CountingIdlingResource = CountingIdlingResource("PatientInfoIdling")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,11 +87,14 @@ class PatientInfo : AppCompatActivity() {
     }
 
     private fun sendDataToFirebase(user: Patient) {
-        val sharedPreferences = getSharedPreferences(AppConstants.sharedPrefName, Context.MODE_PRIVATE)
+        val sharedPreferences =
+            getSharedPreferences(AppConstants.sharedPrefName, Context.MODE_PRIVATE)
         val firebaseUserId: String? = sharedPreferences.getString(AppConstants.userid, null)
 
+        idling.increment()
         FirebaseDatabase.getInstance().getReference(AppConstants.patient_coll_name)
             .child(firebaseUserId!!).setValue(user).addOnCompleteListener {
+                idling.decrement()
                 if (it.isSuccessful) {
                     saveToSharedPrefsPatient()
                     activityPatientInfoBinding.progressBar7.visibility = View.GONE

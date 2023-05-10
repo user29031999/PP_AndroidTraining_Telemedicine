@@ -15,18 +15,15 @@ class AlertValidations {
     companion object {
         fun isToastDisplayed(message: String, decorView: View) {
             onView(withText(message))
-                .inRoot(withDecorView(not(decorView)))// Here we use decorView
+                .inRoot(withDecorView(not(decorView)))
                 .check(matches(isDisplayed()))
-            /*onView(withText(message)).inRoot(ToastMatcher())
-                .check(matches(isDisplayed()))*/
-            //onView(withText(message)).inRoot(withContentDescription(message)).check(matches(isDisplayed()))
         }
 
         fun isSnackbarDisplayed(message: String) {
-            Espresso.onView(ViewMatchers.withText(message))
+            onView(withText(message))
                 .check(
-                    ViewAssertions.matches(
-                        ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
+                    matches(
+                        withEffectiveVisibility(Visibility.VISIBLE)
                     )
                 )
         }
